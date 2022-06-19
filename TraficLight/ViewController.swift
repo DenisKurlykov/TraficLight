@@ -8,7 +8,9 @@
 import UIKit
 
 enum CurrentLight {
-    case red, yellow, green
+    case red
+    case yellow
+    case green
 }
 
 class ViewController: UIViewController {
@@ -36,7 +38,6 @@ class ViewController: UIViewController {
     }
     
     @IBAction func startButtonTapped() {
-        
         startButton.setTitle("NEXT", for: .normal)
         
         switch currentLight {
