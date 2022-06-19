@@ -7,12 +7,6 @@
 
 import UIKit
 
-enum CurrentLight {
-    case red
-    case yellow
-    case green
-}
-
 class ViewController: UIViewController {
     
     @IBOutlet var redLight: UIView!
@@ -21,7 +15,7 @@ class ViewController: UIViewController {
     
     @IBOutlet var startButton: UIButton!
     
-    private var currentLight = CurrentLight.red
+    private var currentLight = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,25 +32,30 @@ class ViewController: UIViewController {
     }
     
     @IBAction func startButtonTapped() {
+        
         startButton.setTitle("NEXT", for: .normal)
         
         switch currentLight {
             
-        case .red:
+        case 0:
             redLight.alpha = 1
             yellowLight.alpha = 0.3
             greenLight.alpha = 0.3
-            currentLight = .yellow
-        case .yellow:
+            currentLight += 1
+        case 1:
             redLight.alpha = 0.3
             yellowLight.alpha  = 1
             greenLight.alpha  = 0.3
-            currentLight = .green
-        case .green:
+            currentLight += 1
+        case 2:
             redLight.alpha  = 0.3
             yellowLight.alpha  = 0.3
             greenLight.alpha  = 1
-            currentLight = .red
+            currentLight = 0
+        
+        default :
+            currentLight = 0
+        
         }
         
         
