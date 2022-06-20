@@ -7,6 +7,10 @@
 
 import UIKit
 
+enum CurrentLight {
+    case red, yellow, green
+}
+
 class ViewController: UIViewController {
     
     @IBOutlet var redLight: UIView!
@@ -15,20 +19,25 @@ class ViewController: UIViewController {
     
     @IBOutlet var startButton: UIButton!
     
-    private var currentLight = 0
+    private var currentLight = CurrentLight.red
+    private let lightIsOff: CGFloat = 0.3
+    private let lightIsOn: CGFloat = 1
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        redLight.layer.cornerRadius = 50
-        redLight.alpha = 0.3
-        yellowLight.layer.cornerRadius = 50
-        yellowLight.alpha = 0.3
-        greenLight.layer.cornerRadius = 50
-        greenLight.alpha = 0.3
+        redLight.alpha = lightIsOff
+        yellowLight.alpha = lightIsOff
+        greenLight.alpha = lightIsOff
         
         startButton.layer.cornerRadius = 15
-        
+    }
+    
+    override func viewWillLayoutSubviews() {
+        redLight.layer.cornerRadius = redLight.frame.width / 2
+        yellowLight.layer.cornerRadius = redLight.frame.width / 2
+        greenLight.layer.cornerRadius = redLight.frame.width / 2
     }
     
     @IBAction func startButtonTapped() {
@@ -37,28 +46,19 @@ class ViewController: UIViewController {
         
         switch currentLight {
             
-        case 0:
-            redLight.alpha = 1
-            yellowLight.alpha = 0.3
-            greenLight.alpha = 0.3
-            currentLight += 1
-        case 1:
-            redLight.alpha = 0.3
-            yellowLight.alpha  = 1
-            greenLight.alpha  = 0.3
-            currentLight += 1
-        case 2:
-            redLight.alpha  = 0.3
-            yellowLight.alpha  = 0.3
-            greenLight.alpha  = 1
-            currentLight = 0
-        
-        default :
-            currentLight = 0
-        
+        case .red:
+            redLight.alpha = lightIsOn
+            greenLight.alpha = lightIsOff
+            currentLight = .yellow
+        case .yellow:
+            redLight.alpha = lightIsOff
+            yellowLight.alpha  = lightIsOn
+            currentLight = .green
+        case .green:
+            greenLight.alpha  = lightIsOn
+            yellowLight.alpha = lightIsOff
+            currentLight = .red
         }
-        
-        
     }
 }
 
